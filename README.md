@@ -101,7 +101,7 @@ The system delivers an easy-to-use, privacy-aware wellness platform where:
 
 # Technical Specification
 
-## **Frontend Next.js + CSS Modules**
+## **Frontend Next.js +  Tailwind CSS**
 
 **Why:**
 Next.js gives fast routing, server-side rendering, and great developer experience.
@@ -134,7 +134,7 @@ Helmet adds secure headers, rate-limiting prevents brute force, and validation p
 ## **Deployment Vercel (Frontend) + Render/ (Backend)**
 
 **Why:**
-These platforms make deployment effortless, handle HTTPS automatically, and allow environment variable isolation — essential for secure health-related apps.
+These platforms make deployment effortless, handle HTTPS automatically, and allow environment variable isolation essential for secure health-related apps.
 
 ---
 
