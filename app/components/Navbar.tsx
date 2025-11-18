@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from 'react';
-import { signOut, useSession } from 'next-auth/react';
-import { Heart, Bell, Settings, LogOut, User, Menu, X } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { Heart, Bell, Settings, LogOut, User, Menu, X } from "lucide-react";
+import Link from "next/link";
 
 interface NavbarProps {
   title?: string;
@@ -16,22 +16,22 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' });
+    await signOut({ callbackUrl: "/" });
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(word => word[0])
-      .join('')
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const getDashboardLink = () => {
-    if (session?.user?.role === 'provider') return '/provider';
-    if (session?.user?.role === 'admin') return '/admin';
-    return '/dashboard';
+    if (session?.user?.role === "provider") return "/provider";
+    if (session?.user?.role === "admin") return "/admin";
+    return "/dashboard";
   };
 
   return (
@@ -40,9 +40,14 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
           <div className="flex items-center">
-            <Link href={session ? getDashboardLink() : '/'} className="flex items-center">
+            <Link
+              href={session ? getDashboardLink() : "/"}
+              className="flex items-center"
+            >
               <Heart className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">{title}</span>
+              <span className="ml-2 text-xl font-bold text-gray-900">
+                {title}
+              </span>
             </Link>
             {subtitle && (
               <span className="ml-4 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
@@ -56,45 +61,45 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
             <div className="hidden md:flex items-center space-x-4">
               {/* Navigation Links */}
               <div className="flex items-center space-x-4">
-                {session.user.role === 'provider' && (
+                {session.user.role === "provider" && (
                   <>
-                    <Link 
-                      href="/provider" 
+                    <Link
+                      href="/provider"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Appointments
                     </Link>
-                    <Link 
-                      href="/provider?tab=patients" 
+                    <Link
+                      href="/provider?tab=patients"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       My Patients
                     </Link>
                   </>
                 )}
-                
-                {session.user.role === 'patient' && (
+
+                {session.user.role === "patient" && (
                   <>
-                    <Link 
-                      href="/dashboard" 
+                    <Link
+                      href="/dashboard"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Dashboard
                     </Link>
-                    <Link 
-                      href="/dashboard?tab=doctors" 
+                    <Link
+                      href="/dashboard?tab=doctors"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Find Doctors
                     </Link>
-                    <Link 
-                      href="/dashboard?tab=appointments" 
+                    <Link
+                      href="/dashboard?tab=appointments"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Appointments
                     </Link>
-                    <Link 
-                      href="/dashboard?tab=goals" 
+                    <Link
+                      href="/dashboard?tab=goals"
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Goals
@@ -117,12 +122,16 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                 >
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white font-medium text-sm">
-                      {getInitials(session.user.name || 'U')}
+                      {getInitials(session.user.name || "U")}
                     </span>
                   </div>
                   <div className="text-left">
-                    <p className="text-gray-700 font-medium text-sm">{session.user.name}</p>
-                    <p className="text-gray-500 text-xs capitalize">{session.user.role}</p>
+                    <p className="text-gray-700 font-medium text-sm">
+                      {session.user.name}
+                    </p>
+                    <p className="text-gray-500 text-xs capitalize">
+                      {session.user.role}
+                    </p>
                   </div>
                 </button>
 
@@ -160,20 +169,20 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
             </div>
           ) : (
             <div className="hidden md:flex items-center space-x-4">
-              <Link 
-                href="/health-info" 
+              <Link
+                href="/health-info"
                 className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Health Info
               </Link>
-              <Link 
-                href="/auth/signin" 
+              <Link
+                href="/auth/signin"
                 className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Sign In
               </Link>
-              <Link 
-                href="/auth/signup" 
+              <Link
+                href="/auth/signup"
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
               >
                 Sign Up
@@ -187,7 +196,11 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-600 hover:text-blue-600 focus:outline-none focus:text-blue-600"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -203,51 +216,79 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                 <div className="flex items-center px-3 py-2 border-b">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
                     <span className="text-white font-medium text-sm">
-                      {getInitials(session.user.name || 'U')}
+                      {getInitials(session.user.name || "U")}
                     </span>
                   </div>
                   <div>
-                    <p className="text-gray-700 font-medium text-sm">{session.user.name}</p>
-                    <p className="text-gray-500 text-xs capitalize">{session.user.role}</p>
+                    <p className="text-gray-700 font-medium text-sm">
+                      {session.user.name}
+                    </p>
+                    <p className="text-gray-500 text-xs capitalize">
+                      {session.user.role}
+                    </p>
                   </div>
                 </div>
 
                 {/* Navigation Links */}
-                {session.user.role === 'provider' && (
+                {session.user.role === "provider" && (
                   <>
-                    <Link href="/provider" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/provider"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       Appointments
                     </Link>
-                    <Link href="/provider?tab=patients" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/provider?tab=patients"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       My Patients
                     </Link>
                   </>
                 )}
 
-                {session.user.role === 'patient' && (
+                {session.user.role === "patient" && (
                   <>
-                    <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/dashboard"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       Dashboard
                     </Link>
-                    <Link href="/dashboard?tab=doctors" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/dashboard?tab=doctors"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       Find Doctors
                     </Link>
-                    <Link href="/dashboard?tab=appointments" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/dashboard?tab=appointments"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       Appointments
                     </Link>
-                    <Link href="/dashboard?tab=goals" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link
+                      href="/dashboard?tab=goals"
+                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       Goals
                     </Link>
                   </>
                 )}
 
-                <Link href="/profile" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                <Link
+                  href="/profile"
+                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
                   Profile
                 </Link>
-                <Link href="/settings" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                <Link
+                  href="/settings"
+                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
                   Settings
                 </Link>
-                <button 
+                <button
                   onClick={handleSignOut}
                   className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
                 >
@@ -256,10 +297,16 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
               </>
             ) : (
               <>
-                <Link href="/auth/signin" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                <Link
+                  href="/auth/signin"
+                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
                   Sign In
                 </Link>
-                <Link href="/auth/signup" className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium">
+                <Link
+                  href="/auth/signup"
+                  className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium"
+                >
                   Sign Up
                 </Link>
               </>
