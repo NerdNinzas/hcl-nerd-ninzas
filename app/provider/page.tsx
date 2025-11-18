@@ -49,13 +49,17 @@ export default function ProviderDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const tab = searchParams?.get('tab') || 'appointments';
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [patients, setPatients] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('all');
   const [providerNotes, setProviderNotes] = useState<{ [key: string]: string }>({});
-  const [activeTab, setActiveTab] = useState(tab);
+  const [activeTab, setActiveTab] = useState(searchParams?.get('tab') || 'appointments');
+
+  useEffect(() => {
+    const tab = searchParams?.get('tab') || 'appointments';
+    setActiveTab(tab);
+  }, [searchParams]);
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<any>(null);
   const [goalData, setGoalData] = useState({
@@ -292,7 +296,10 @@ export default function ProviderDashboard() {
           <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               <button
-                onClick={() => setActiveTab('appointments')}
+                onClick={() => {
+                  setActiveTab('appointments');
+                  router.push('/provider');
+                }}
                 className={`${
                   activeTab === 'appointments'
                     ? 'border-blue-500 text-blue-600'
@@ -302,7 +309,10 @@ export default function ProviderDashboard() {
                 Appointment Requests
               </button>
               <button
-                onClick={() => setActiveTab('patients')}
+                onClick={() => {
+                  setActiveTab('patients');
+                  router.push('/provider?tab=patients');
+                }}
                 className={`${
                   activeTab === 'patients'
                     ? 'border-blue-500 text-blue-600'

@@ -38,8 +38,12 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const tab = searchParams?.get('tab') || 'overview';
-  const [activeTab, setActiveTab] = useState(tab);
+  const [activeTab, setActiveTab] = useState(searchParams?.get('tab') || 'overview');
+
+  useEffect(() => {
+    const tab = searchParams?.get('tab') || 'overview';
+    setActiveTab(tab);
+  }, [searchParams]);
   const [providers, setProviders] = useState<Provider[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -256,58 +260,6 @@ export default function Dashboard() {
 
   const displayName = userData?.name || session.user?.name || "User";
   const activeGoals = goals.filter(g => g.status === 'active').slice(0, 4);
-  const upcomingAppointments = appointments.filter(a => a.status === 'confirmed').slice(0, 3);
-  
-  // Generate preventive care reminders based on user data
-  const getPreventiveCareReminders = () => {
-    const reminders = [];
-    const now = new Date();
-    
-    // Check for upcoming appointments
-    const nextAppointment = appointments.find(a => 
-      a.status === 'confirmed' && a.appointmentDate && new Date(a.appointmentDate) > now
-    );
-    
-    if (nextAppointment) {
-      reminders.push({
-        type: 'appointment',
-        title: 'Upcoming Appointment',
-        message: `${nextAppointment.provider.name} on ${new Date(nextAppointment.appointmentDate!).toLocaleDateString()}`,
-        priority: 'high'
-      });
-    }
-    
-    // Check for incomplete goals
-    const incompleteGoals = goals.filter(g => g.status === 'active' && g.endDate);
-    incompleteGoals.forEach(goal => {
-      if (goal.endDate) {
-        const daysLeft = Math.ceil((new Date(goal.endDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        if (daysLeft > 0 && daysLeft <= 7) {
-          reminders.push({
-            type: 'goal',
-            title: `Goal Deadline Approaching`,
-            message: `${goal.title} - ${daysLeft} days left`,
-            priority: 'medium'
-          });
-        }
-      }
-    });
-    
-    // Health checkup reminder
-    if (userData?.dateOfBirth) {
-      const age = new Date().getFullYear() - new Date(userData.dateOfBirth).getFullYear();
-      if (age >= 40) {
-        reminders.push({
-          type: 'checkup',
-          title: 'Annual Physical',
-          message: 'Schedule your annual physical examination',
-          priority: 'medium'
-        });
-      }
-    }
-    
-    return reminders.slice(0, 4);
-  };
 
   const healthTips = [
     "Stay hydrated by drinking at least 8 glasses of water throughout the day",
@@ -364,7 +316,10 @@ export default function Dashboard() {
           <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               <button
-                onClick={() => setActiveTab('overview')}
+                onClick={() => {
+                  setActiveTab('overview');
+                  router.push('/dashboard');
+                }}
                 className={`${
                   activeTab === 'overview'
                     ? 'border-blue-500 text-blue-600'
@@ -374,7 +329,10 @@ export default function Dashboard() {
                 Overview
               </button>
               <button
-                onClick={() => setActiveTab('doctors')}
+                onClick={() => {
+                  setActiveTab('doctors');
+                  router.push('/dashboard?tab=doctors');
+                }}
                 className={`${
                   activeTab === 'doctors'
                     ? 'border-blue-500 text-blue-600'
@@ -384,7 +342,10 @@ export default function Dashboard() {
                 Find Doctors
               </button>
               <button
-                onClick={() => setActiveTab('appointments')}
+                onClick={() => {
+                  setActiveTab('appointments');
+                  router.push('/dashboard?tab=appointments');
+                }}
                 className={`${
                   activeTab === 'appointments'
                     ? 'border-blue-500 text-blue-600'
@@ -394,7 +355,10 @@ export default function Dashboard() {
                 My Appointments
               </button>
               <button
-                onClick={() => setActiveTab('goals')}
+                onClick={() => {
+                  setActiveTab('goals');
+                  router.push('/dashboard?tab=goals');
+                }}
                 className={`${
                   activeTab === 'goals'
                     ? 'border-blue-500 text-blue-600'
@@ -479,7 +443,10 @@ export default function Dashboard() {
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-semibold text-gray-900">My Wellness Goals</h2>
                     <button 
-                      onClick={() => setActiveTab('goals')}
+                      onClick={() => {
+                        setActiveTab('goals');
+                        router.push('/dashboard?tab=goals');
+                      }}
                       className="text-blue-600 hover:text-blue-700 text-sm font-medium"
                     >
                       View All
@@ -572,31 +539,6 @@ export default function Dashboard() {
 
               {/* Sidebar */}
               <div className="space-y-6">
-                {/* Preventive Care Reminders */}
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Reminders</h2>
-                  
-                  {getPreventiveCareReminders().length === 0 ? (
-                    <div className="text-center py-4">
-                      <CheckCircle className="mx-auto h-8 w-8 text-green-500" />
-                      <p className="mt-2 text-sm text-gray-500">All caught up!</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {getPreventiveCareReminders().map((reminder, idx) => (
-                        <div key={idx} className={`p-3 rounded-lg ${
-                          reminder.priority === 'high' ? 'bg-red-50 border-l-4 border-red-500' :
-                          reminder.priority === 'medium' ? 'bg-yellow-50 border-l-4 border-yellow-500' :
-                          'bg-blue-50 border-l-4 border-blue-500'
-                        }`}>
-                          <h4 className="text-sm font-medium text-gray-900">{reminder.title}</h4>
-                          <p className="text-xs text-gray-600 mt-1">{reminder.message}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
                 {/* Health Tip of the Day */}
                 <div className="bg-gradient-to-br from-blue-500 to-green-500 rounded-lg shadow-md p-6 text-white">
                   <div className="flex items-start space-x-3">
@@ -609,27 +551,6 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-
-                {/* Upcoming Appointments */}
-                {upcomingAppointments.length > 0 && (
-                  <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Upcoming</h2>
-                    <div className="space-y-3">
-                      {upcomingAppointments.map((apt) => (
-                        <div key={apt._id} className="border-l-4 border-blue-500 pl-3">
-                          <p className="font-medium text-gray-900">{apt.provider.name}</p>
-                          <p className="text-sm text-gray-600">{apt.provider.specialty}</p>
-                          {apt.appointmentDate && (
-                            <p className="text-xs text-gray-500 mt-1">
-                              {new Date(apt.appointmentDate).toLocaleDateString()}
-                              {apt.appointmentTime && ` at ${apt.appointmentTime}`}
-                            </p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </>
