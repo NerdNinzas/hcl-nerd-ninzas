@@ -566,7 +566,7 @@ function DashboardContent() {
                 <input
                   type="text"
                   placeholder="Search by name or specialty..."
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -767,7 +767,7 @@ function DashboardContent() {
                           <input
                             type="number"
                             placeholder={`Add ${goal.unit}...`}
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                             id={`progress-${goal._id}`}
                             min="0"
                             step="any"
@@ -860,7 +860,7 @@ function DashboardContent() {
                 </label>
                 <input
                   type="date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500"
                   value={bookingData.appointmentDate}
                   onChange={(e) => setBookingData({ ...bookingData, appointmentDate: e.target.value })}
                   min={new Date().toISOString().split('T')[0]}
@@ -873,6 +873,7 @@ function DashboardContent() {
                 </label>
                 <input
                   type="time"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   value={bookingData.appointmentTime}
                   onChange={(e) => setBookingData({ ...bookingData, appointmentTime: e.target.value })}
@@ -901,7 +902,7 @@ function DashboardContent() {
                 </label>
                 <textarea
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                   placeholder="Any specific concerns or symptoms..."
                   value={bookingData.patientNotes}
                   onChange={(e) => setBookingData({ ...bookingData, patientNotes: e.target.value })}

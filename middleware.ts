@@ -39,7 +39,7 @@ export default withAuth(
         const pathname = req.nextUrl.pathname;
         
         // Allow access to public routes
-        if (pathname.startsWith('/auth/') || pathname === '/' || pathname.startsWith('/api/auth/')) {
+        if (pathname.startsWith('/auth/') || pathname === '/' || pathname === '/health-info' || pathname.startsWith('/api/auth/')) {
           return true;
         }
 
@@ -57,6 +57,7 @@ export const config = {
     '/admin/:path*',
     '/auth/:path*',
     '/profile/:path*',
+    '/settings/:path*',
     '/onboarding/:path*',
     '/api/user/:path*',
     '/api/goals/:path*',

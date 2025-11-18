@@ -450,7 +450,7 @@ function ProviderDashboardContent() {
                           <textarea
                             rows={3}
                             placeholder="Add notes (optional)..."
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             value={providerNotes[appointment._id] || ''}
                             onChange={(e) => setProviderNotes({ ...providerNotes, [appointment._id]: e.target.value })}
                           />
@@ -613,7 +613,7 @@ function ProviderDashboardContent() {
                 <input
                   type="text"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g., Daily Steps, Water Intake"
                   value={goalData.title}
                   onChange={(e) => setGoalData({ ...goalData, title: e.target.value })}
@@ -626,7 +626,7 @@ function ProviderDashboardContent() {
                 </label>
                 <textarea
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                   placeholder="Additional details about the goal..."
                   value={goalData.description}
                   onChange={(e) => setGoalData({ ...goalData, description: e.target.value })}
@@ -643,7 +643,7 @@ function ProviderDashboardContent() {
                     required
                     min="0"
                     step="any"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                     placeholder="10000"
                     value={goalData.targetValue}
                     onChange={(e) => setGoalData({ ...goalData, targetValue: e.target.value })}
@@ -656,7 +656,7 @@ function ProviderDashboardContent() {
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
                     placeholder="steps, glasses, hours"
                     value={goalData.unit}
                     onChange={(e) => setGoalData({ ...goalData, unit: e.target.value })}
@@ -685,7 +685,7 @@ function ProviderDashboardContent() {
                 </label>
                 <input
                   type="date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500"
                   min={new Date().toISOString().split('T')[0]}
                   value={goalData.endDate}
                   onChange={(e) => setGoalData({ ...goalData, endDate: e.target.value })}

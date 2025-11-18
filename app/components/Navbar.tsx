@@ -41,8 +41,8 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
           {/* Logo and Title */}
           <div className="flex items-center">
             <Link
-              href={session ? getDashboardLink() : "/"}
-              className="flex items-center"
+              href="/"
+              className="flex items-center hover:opacity-80 transition-opacity"
             >
               <Heart className="h-8 w-8 text-blue-600" />
               <span className="ml-2 text-xl font-bold text-gray-900">
@@ -57,69 +57,33 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
           </div>
 
           {/* Desktop Navigation */}
-          {session ? (
-            <div className="hidden md:flex items-center space-x-4">
-              {/* Navigation Links */}
-              <div className="flex items-center space-x-4">
-                {session.user.role === "provider" && (
-                  <>
-                    <Link
-                      href="/provider"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Appointments
-                    </Link>
-                    <Link
-                      href="/provider?tab=patients"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      My Patients
-                    </Link>
-                  </>
-                )}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Common Navigation Links */}
+            <Link
+              href="/health-info"
+              className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Health Info
+            </Link>
 
-                {session.user.role === "patient" && (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=doctors"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Find Doctors
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=appointments"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Appointments
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=goals"
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Goals
-                    </Link>
-                  </>
-                )}
-              </div>
-
-              {/* Notifications */}
-              <button className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors">
-                <Bell className="h-6 w-6" />
-                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400"></span>
-              </button>
-
-              {/* Profile Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center space-x-3 focus:outline-none"
+            {session ? (
+              <>
+                {/* Dashboard Link */}
+                <Link
+                  href={getDashboardLink()}
+                  className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
+                  Dashboard
+                </Link>
+
+                {/* Notifications */}
+                <button className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                  <Bell className="h-6 w-6" />
+                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400"></span>
+                </button>
+
+                {/* User Info & Logout */}
+                <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white font-medium text-sm">
                       {getInitials(session.user.name || "U")}
@@ -133,62 +97,32 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                       {session.user.role}
                     </p>
                   </div>
-                </button>
-
-                {/* Profile Dropdown Menu */}
-                {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      <Link
-                        href="/profile"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        <User className="w-4 h-4 mr-2" />
-                        Profile
-                      </Link>
-                      <Link
-                        href="/settings"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        <Settings className="w-4 h-4 mr-2" />
-                        Settings
-                      </Link>
-                      <button
-                        onClick={handleSignOut}
-                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <LogOut className="w-4 h-4 mr-2" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="hidden md:flex items-center space-x-4">
-              <Link
-                href="/health-info"
-                className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Health Info
-              </Link>
-              <Link
-                href="/auth/signin"
-                className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
-              >
-                Sign Up
-              </Link>
-            </div>
-          )}
+                  <button
+                    onClick={handleSignOut}
+                    className="flex items-center text-gray-600 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    <LogOut className="w-4 h-4 mr-1" />
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -210,10 +144,19 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+            {/* Health Info - Always visible */}
+            <Link
+              href="/health-info"
+              className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Health Info
+            </Link>
+
             {session ? (
               <>
                 {/* User Info */}
-                <div className="flex items-center px-3 py-2 border-b">
+                <div className="flex items-center px-3 py-2 border-b border-t">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
                     <span className="text-white font-medium text-sm">
                       {getInitials(session.user.name || "U")}
@@ -229,70 +172,32 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                   </div>
                 </div>
 
-                {/* Navigation Links */}
-                {session.user.role === "provider" && (
-                  <>
-                    <Link
-                      href="/provider"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Appointments
-                    </Link>
-                    <Link
-                      href="/provider?tab=patients"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      My Patients
-                    </Link>
-                  </>
-                )}
-
-                {session.user.role === "patient" && (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=doctors"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Find Doctors
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=appointments"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Appointments
-                    </Link>
-                    <Link
-                      href="/dashboard?tab=goals"
-                      className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Goals
-                    </Link>
-                  </>
-                )}
+                {/* Dashboard Link */}
+                <Link
+                  href={getDashboardLink()}
+                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
 
                 <Link
                   href="/profile"
                   className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Profile
                 </Link>
-                <Link
-                  href="/settings"
-                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Settings
-                </Link>
+                
                 <button
-                  onClick={handleSignOut}
-                  className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                  onClick={() => {
+                    handleSignOut();
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-red-600 hover:text-red-700 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
                 >
-                  Sign Out
+                  <LogOut className="w-4 h-4 mr-2 inline" />
+                  Logout
                 </button>
               </>
             ) : (
@@ -300,12 +205,14 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                 <Link
                   href="/auth/signin"
                   className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
                   className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Sign Up
                 </Link>

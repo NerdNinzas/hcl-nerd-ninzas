@@ -18,6 +18,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Navbar } from "./components/Navbar";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,100 +26,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Heart className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">
-                HealthCare Portal
-              </span>
-            </div>
-
-            {/* Desktop Navigation */}
-            {/* Navigation Links */}
-            <div className="hidden md:flex space-x-8">
-              <Link
-                href="#features"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Features
-              </Link>
-              <Link
-                href="/health-info"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Health Info
-              </Link>
-              <Link
-                href="#about"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="#contact"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Contact
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-600 hover:text-blue-600 focus:outline-none focus:text-blue-600"
-              >
-                {isMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-              <a
-                href="#features"
-                className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Features
-              </a>
-              <a
-                href="#about"
-                className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                About
-              </a>
-              <a
-                href="#providers"
-                className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                For Providers
-              </a>
-              <Link
-                href="/auth/signin"
-                className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="border border-blue-600 text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        )}
-      </nav>
+     <Navbar/>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
