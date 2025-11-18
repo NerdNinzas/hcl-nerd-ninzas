@@ -35,14 +35,32 @@ export default function Home() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <a href="#features" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
-                <a href="#about" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
-                <a href="#providers" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">For Providers</a>
-                <Link href="/auth/signin" className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">Login</Link>
-                <Link href="/auth/signup" className="border border-blue-600 text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition-colors">Sign Up</Link>
-              </div>
+            {/* Navigation Links */}
+            <div className="hidden md:flex space-x-8">
+              <Link 
+                href="#features" 
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                Features
+              </Link>
+              <Link 
+                href="/health-info" 
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                Health Info
+              </Link>
+              <Link 
+                href="#about" 
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                About
+              </Link>
+              <Link 
+                href="#contact" 
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                Contact
+              </Link>
             </div>
 
             {/* Mobile menu button */}
