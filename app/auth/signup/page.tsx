@@ -145,12 +145,8 @@ export default function SignUp() {
         setError('Account created but failed to sign in automatically. Please sign in manually.');
         setTimeout(() => router.push('/auth/signin'), 2000);
       } else {
-        // Redirect based on role
-        if (formData.role === 'provider') {
-          router.push('/provider');
-        } else {
-          router.push('/dashboard');
-        }
+        // Redirect to onboarding to complete profile
+        router.push('/onboarding');
       }
 
     } catch (error: any) {

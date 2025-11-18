@@ -29,16 +29,25 @@ export default function SignIn() {
       if (result?.error) {
         setError(result.error);
       } else {
-        // Get the updated session to check user role
+        // Get the updated session to check user role and profile completion
         const session = await getSession();
         
-        // Redirect based on user role
-        if (session?.user?.role === 'provider') {
-          router.push('/provider');
-        } else if (session?.user?.role === 'admin') {
-          router.push('/admin');
+        // Check if profile is completed
+        const userResponse = await fetch('/api/user');
+        const userData = await userResponse.json();
+        
+        if (userData.user && !userData.user.profileCompleted) {
+          // Redirect to onboarding if profile not completed
+          router.push('/onboarding');
         } else {
-          router.push('/dashboard');
+          // Redirect based on user role
+          if (session?.user?.role === 'provider') {
+            router.push('/provider');
+          } else if (session?.user?.role === 'admin') {
+            router.push('/admin');
+          } else {
+            router.push('/dashboard');
+          }
         }
       }
     } catch (error) {

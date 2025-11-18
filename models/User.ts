@@ -39,6 +39,15 @@ export interface IUser {
   specialty?: string;
   licenseNumber?: string;
   clinic?: string;
+  availableHours?: {
+    day: string;
+    startTime: string;
+    endTime: string;
+  }[];
+  maxPatients?: number;
+  currentPatients?: number;
+  bio?: string;
+  profileCompleted?: boolean;
   
   // Health goals and tracking
   healthGoals?: {
@@ -137,6 +146,26 @@ const UserSchema = new mongoose.Schema<IUser>({
     }
   },
   clinic: String,
+  availableHours: [{
+    day: String,
+    startTime: String,
+    endTime: String
+  }],
+  maxPatients: {
+    type: Number,
+    default: 10,
+    min: 7,
+    max: 10
+  },
+  currentPatients: {
+    type: Number,
+    default: 0
+  },
+  bio: String,
+  profileCompleted: {
+    type: Boolean,
+    default: false
+  },
   
   // Health goals
   healthGoals: {
