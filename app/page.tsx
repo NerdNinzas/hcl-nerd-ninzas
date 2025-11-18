@@ -40,8 +40,8 @@ export default function Home() {
                 <a href="#features" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
                 <a href="#about" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                 <a href="#providers" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">For Providers</a>
-                <Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">Login</Link>
-                <Link href="/register" className="border border-blue-600 text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition-colors">Sign Up</Link>
+                <Link href="/auth/signin" className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">Login</Link>
+                <Link href="/auth/signup" className="border border-blue-600 text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition-colors">Sign Up</Link>
               </div>
             </div>
 
@@ -64,8 +64,8 @@ export default function Home() {
               <a href="#features" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Features</a>
               <a href="#about" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
               <a href="#providers" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">For Providers</a>
-              <Link href="/login" className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium">Login</Link>
-              <Link href="/register" className="border border-blue-600 text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Sign Up</Link>
+              <Link href="/auth/signin" className="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium">Login</Link>
+              <Link href="/auth/signup" className="border border-blue-600 text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Sign Up</Link>
             </div>
           </div>
         )}
@@ -86,7 +86,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex justify-center gap-x-6">
               <Link 
-                href="/register" 
+                href="/auth/signup" 
                 className="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-800 focus-visible:outline-blue-600"
               >
                 Get Started Today
@@ -215,7 +215,7 @@ export default function Home() {
           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex rounded-md shadow">
               <Link
-                href="/register"
+                href="/auth/signup"
                 className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 transition-colors"
               >
                 Get Started
@@ -224,7 +224,7 @@ export default function Home() {
             </div>
             <div className="ml-3 inline-flex rounded-md shadow">
               <Link
-                href="/login"
+                href="/auth/signin"
                 className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-400 transition-colors"
               >
                 Sign In

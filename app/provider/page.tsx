@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { 
   Heart, 
   Users, 
@@ -22,15 +24,31 @@ import {
   FileText
 } from "lucide-react";
 import { HealthCard, PatientCard, Alert } from '../components/HealthcareComponents';
+import { Navbar } from '../components/Navbar';
 
 export default function ProviderDashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
 
-  // Mock provider data
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (!session || session.user?.role !== 'provider') {
+    router.push('/auth/signin');
+    return null;
+  }
+
+  // Use actual provider data from session
   const providerData = {
-    name: "Dr. Emily Chen",
-    specialty: "Internal Medicine",
+    name: session.user?.name || "Dr. Provider",
+    specialty: "Internal Medicine", // This would come from user profile
     totalPatients: 247,
     todayAppointments: 12,
     pendingReviews: 8
@@ -194,36 +212,7 @@ export default function ProviderDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Heart className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">HealthCare Portal</span>
-              <span className="ml-4 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                Provider Dashboard
-              </span>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <button className="relative p-2 text-gray-600 hover:text-blue-600">
-                <Bell className="h-6 w-6" />
-                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400"></span>
-              </button>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-medium text-sm">EC</span>
-                </div>
-                <div>
-                  <p className="text-gray-700 font-medium text-sm">{providerData.name}</p>
-                  <p className="text-gray-500 text-xs">{providerData.specialty}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar subtitle="Provider Dashboard" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
@@ -416,7 +405,7 @@ export default function ProviderDashboard() {
                 <div>
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-gray-600">Response Time</span>
-                    <span className="font-medium">< 2 hours</span>
+                    <span className="font-medium"> 2 hours</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div className="h-2 bg-purple-500 rounded-full" style={{ width: '88%' }}></div>
