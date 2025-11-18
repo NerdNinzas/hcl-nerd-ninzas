@@ -1,5 +1,3 @@
-
-
 # Healthcare Wellness & Preventive Care Portal
 
 ## Core Problem in One Line
@@ -21,30 +19,26 @@ We aim to build a **Healthcare Wellness & Preventive Care Portal** that:
 
 ### For Patients:
 
-* Makes it easy to **set and track wellness goals** (steps, hydration, exercise).
-* Sends **preventive care reminders** (checkups, screenings, vaccines).
-* Provides a **simple dashboard** for health goals and tips.
-* Ensures **privacy and secure access** to their personal health information.
+- Makes it easy to **set and track wellness goals** (steps, hydration, exercise).
+- Sends **preventive care reminders** (checkups, screenings, vaccines).
+- Provides a **simple dashboard** for health goals and tips.
+- Ensures **privacy and secure access** to their personal health information.
 
 ### For Healthcare Providers:
 
-* Offers a **lightweight view of patient compliance** with wellness goals.
-* Makes patient tracking simple without exposing unnecessary personal data.
-* Provides tools to promote **preventive care engagement**.
+- Offers a **lightweight view of patient compliance** with wellness goals.
+- Makes patient tracking simple without exposing unnecessary personal data.
+- Provides tools to promote **preventive care engagement**.
 
 ---
 
-
 ## Why Is This Challenging?
 
-* Health data must be handled **securely and privately** (HIPAA-aware).
-* Needs **role-based access**: patient vs. provider.
-* Must be **fast, usable, and responsive** across devices.
-* Requires backend → frontend → cloud integration.
-* Users expect real-time, simple dashboards and reminders.
-
-Here is a **short, clean, README-ready solution that explains both user journeys** (Patient + Provider).
-No architecture. No technical jargon. Just the solution and how each user flows through the system.
+- Health data must be handled **securely and privately** (HIPAA-aware).
+- Needs **role-based access**: patient vs. provider.
+- Must be **fast, usable, and responsive** across devices.
+- Requires backend → frontend → cloud integration.
+- Users expect real-time, simple dashboards and reminders.
 
 ---
 
@@ -58,9 +52,9 @@ No architecture. No technical jargon. Just the solution and how each user flows 
 2. **Personal Dashboard**
    After logging in, the patient sees a simple dashboard showing:
 
-   * Wellness goals (steps, water intake, exercise)
-   * Preventive care reminders (vaccines, checkups)
-   * Daily health tip for awareness
+   - Wellness goals (steps, water intake, exercise)
+   - Preventive care reminders (vaccines, checkups)
+   - Daily health tip for awareness
 
 3. **Goal Tracking**
    Patients can easily log progress (e.g., steps walked, water consumed) and see how close they are to their goals.
@@ -84,9 +78,9 @@ No architecture. No technical jargon. Just the solution and how each user flows 
 3. **Patient Overview**
    Clicking a patient shows:
 
-   * Their wellness goals
-   * Their logged progress
-   * Their preventive care compliance levels
+   - Their wellness goals
+   - Their logged progress
+   - Their preventive care compliance levels
 
    (Only essential information is shown to protect patient privacy.)
 
@@ -99,12 +93,7 @@ No architecture. No technical jargon. Just the solution and how each user flows 
 
 The system delivers an easy-to-use, privacy-aware wellness platform where:
 
-* **Patients stay consistent with daily wellness and preventive care**, and
-* **Providers gain simple visibility into patient compliance** to support better outcomes.
+- **Patients stay consistent with daily wellness and preventive care**, and
+- **Providers gain simple visibility into patient compliance** to support better outcomes.
 
 ---
-
-
-
-
-
