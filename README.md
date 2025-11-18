@@ -98,10 +98,9 @@ The system delivers an easy-to-use, privacy-aware wellness platform where:
 
 ---
 
-
 # Technical Specification
 
-## **Frontend Next.js +  Tailwind CSS**
+## **Frontend Next.js + Tailwind CSS**
 
 **Why:**
 Next.js gives fast routing, server-side rendering, and great developer experience.
@@ -129,17 +128,12 @@ Bcrypt ensures passwords are safely hashed, reducing credential risk and meeting
 
 **Why:**
 A healthcare-focused app must guard against common attacks.
-Helmet adds secure headers, rate-limiting prevents brute force, and validation protects against malicious input.
+rate-limiting prevents brute force, and validation protects against malicious input.
 
 ## **Deployment Vercel (Frontend) + Render/ (Backend)**
 
 **Why:**
 These platforms make deployment effortless, handle HTTPS automatically, and allow environment variable isolation essential for secure health-related apps.
-
----
-
-
-Here is a **clean, descriptive, short explanation of the data model** — perfect for README, documentation, or submission.
 
 ---
 
@@ -168,14 +162,10 @@ For security, passwords are saved only as hashed values, and consent is stored f
 
 ---
 
-
-
-
 ### **Goal**
 
 The **Goal** model represents any wellness target a patient wants to track — such as steps, water intake, or exercise.
 Each goal has a target value, unit, and a history of progress entries so the dashboard can show daily tracking and growth over time.
-
 
 | Field       | Type                 | Notes                                          |
 | ----------- | -------------------- | ---------------------------------------------- |
@@ -186,7 +176,6 @@ Each goal has a target value, unit, and a history of progress entries so the das
 | `unit`      | String               | `"steps"`, `"ml"`, `"minutes"`                 |
 | `progress`  | Array<ProgressEntry> | Daily logs                                     |
 | `createdAt` | Date                 | Timestamp                                      |
-
 
 ---
 
