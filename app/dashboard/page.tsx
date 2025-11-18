@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Navbar } from '../components/Navbar';
 import {
   User,
@@ -37,7 +37,9 @@ import {
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('overview');
+  const searchParams = useSearchParams();
+  const tab = searchParams?.get('tab') || 'overview';
+  const [activeTab, setActiveTab] = useState(tab);
   const [providers, setProviders] = useState<Provider[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -241,53 +243,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleEditProfile = () => {
-    if (userData) {
-      setProfileData({
-        phoneNumber: userData.phoneNumber || '',
-        allergies: userData.medicalInfo?.allergies?.join(', ') || '',
-        medications: userData.medicalInfo?.medications?.join(', ') || '',
-        conditions: userData.medicalInfo?.conditions?.join(', ') || ''
-      });
-    }
-    setShowProfileModal(true);
-    setProfileError('');
-    setProfileSuccess(false);
-  };
-
-  const submitProfileUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setProfileError('');
-    
-    try {
-      const response = await fetch('/api/user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          phoneNumber: profileData.phoneNumber,
-          medicalInfo: {
-            allergies: profileData.allergies.split(',').map((a: string) => a.trim()).filter((a: string) => a),
-            medications: profileData.medications.split(',').map((m: string) => m.trim()).filter((m: string) => m),
-            conditions: profileData.conditions.split(',').map((c: string) => c.trim()).filter((c: string) => c)
-          }
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update profile');
-      }
-
-      setProfileSuccess(true);
-      fetchUserData();
-      setTimeout(() => {
-        setShowProfileModal(false);
-      }, 1500);
-    } catch (error: any) {
-      setProfileError(error.message || 'Failed to update profile');
-    }
-  };
 
   if (status === 'loading') {
     return (
@@ -399,18 +354,9 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Welcome back, {displayName.split(' ')[0]}!</h1>
-            <p className="mt-2 text-gray-600">Here's your health overview for today</p>
-          </div>
-          <button
-            onClick={handleEditProfile}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-          >
-            <User className="w-4 h-4 mr-2" />
-            Edit Profile
-          </button>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Welcome back, {displayName.split(' ')[0]}!</h1>
+          <p className="mt-2 text-gray-600">Here's your health overview for today</p>
         </div>
 
         {/* Tabs */}
@@ -572,69 +518,55 @@ export default function Dashboard() {
                   )}
                 </div>
 
-                {/* Profile Summary */}
+                {/* Quick Actions */}
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900">Health Profile</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
+                  
+                  <div className="space-y-3">
                     <button 
-                      onClick={handleEditProfile}
-                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                      onClick={() => setActiveTab('doctors')}
+                      className="w-full flex items-center p-3 text-left hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
                     >
-                      Edit
+                      <Stethoscope className="w-5 h-5 text-blue-600 mr-3" />
+                      <div>
+                        <span className="text-gray-900 font-medium">Find Doctors</span>
+                        <p className="text-xs text-gray-500">Browse and book appointments</p>
+                      </div>
+                    </button>
+                    
+                    <button 
+                      onClick={() => setActiveTab('appointments')}
+                      className="w-full flex items-center p-3 text-left hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
+                    >
+                      <Calendar className="w-5 h-5 text-green-600 mr-3" />
+                      <div>
+                        <span className="text-gray-900 font-medium">My Appointments</span>
+                        <p className="text-xs text-gray-500">View upcoming visits</p>
+                      </div>
+                    </button>
+                    
+                    <button 
+                      onClick={() => setActiveTab('goals')}
+                      className="w-full flex items-center p-3 text-left hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
+                    >
+                      <Activity className="w-5 h-5 text-purple-600 mr-3" />
+                      <div>
+                        <span className="text-gray-900 font-medium">Health Goals</span>
+                        <p className="text-xs text-gray-500">Track your progress</p>
+                      </div>
+                    </button>
+                    
+                    <button 
+                      onClick={() => router.push('/profile')}
+                      className="w-full flex items-center p-3 text-left hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
+                    >
+                      <User className="w-5 h-5 text-gray-600 mr-3" />
+                      <div>
+                        <span className="text-gray-900 font-medium">My Profile</span>
+                        <p className="text-xs text-gray-500">Update health information</p>
+                      </div>
                     </button>
                   </div>
-                  
-                  {userData ? (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Contact</label>
-                        <p className="text-gray-900">{userData.phoneNumber || 'Not provided'}</p>
-                      </div>
-                      
-                      {userData.medicalInfo?.allergies && userData.medicalInfo.allergies.length > 0 && (
-                        <div>
-                          <label className="text-sm font-medium text-gray-700">Allergies</label>
-                          <div className="flex flex-wrap gap-2 mt-1">
-                            {userData.medicalInfo.allergies.map((allergy: string, idx: number) => (
-                              <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                {allergy}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      
-                      {userData.medicalInfo?.medications && userData.medicalInfo.medications.length > 0 && (
-                        <div>
-                          <label className="text-sm font-medium text-gray-700">Current Medications</label>
-                          <div className="flex flex-wrap gap-2 mt-1">
-                            {userData.medicalInfo.medications.map((med: string, idx: number) => (
-                              <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {med}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      
-                      {userData.medicalInfo?.conditions && userData.medicalInfo.conditions.length > 0 && (
-                        <div>
-                          <label className="text-sm font-medium text-gray-700">Medical Conditions</label>
-                          <div className="flex flex-wrap gap-2 mt-1">
-                            {userData.medicalInfo.conditions.map((condition: string, idx: number) => (
-                              <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                {condition}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-center py-4">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -1076,114 +1008,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Profile Edit Modal */}
-      {showProfileModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-gray-900">Edit Health Profile</h3>
-              <button
-                onClick={() => setShowProfileModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {profileSuccess && (
-              <div className="mb-4 bg-green-50 border border-green-200 rounded-lg p-3">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                  <p className="ml-2 text-sm text-green-800">Profile updated successfully!</p>
-                </div>
-              </div>
-            )}
-
-            {profileError && (
-              <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3">
-                <div className="flex items-center">
-                  <AlertCircle className="h-5 w-5 text-red-400" />
-                  <p className="ml-2 text-sm text-red-800">{profileError}</p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={submitProfileUpdate} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="+1 234 567 8900"
-                  value={profileData.phoneNumber}
-                  onChange={(e) => setProfileData({ ...profileData, phoneNumber: e.target.value })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <AlertCircle className="inline w-4 h-4 mr-1 text-red-500" />
-                  Allergies
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Penicillin, Peanuts (comma separated)"
-                  value={profileData.allergies}
-                  onChange={(e) => setProfileData({ ...profileData, allergies: e.target.value })}
-                />
-                <p className="text-xs text-gray-500 mt-1">Separate multiple items with commas</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Medications
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Aspirin, Metformin (comma separated)"
-                  value={profileData.medications}
-                  onChange={(e) => setProfileData({ ...profileData, medications: e.target.value })}
-                />
-                <p className="text-xs text-gray-500 mt-1">Separate multiple items with commas</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Medical Conditions
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Diabetes, Hypertension (comma separated)"
-                  value={profileData.conditions}
-                  onChange={(e) => setProfileData({ ...profileData, conditions: e.target.value })}
-                />
-                <p className="text-xs text-gray-500 mt-1">Separate multiple items with commas</p>
-              </div>
-
-              <div className="flex space-x-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowProfileModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

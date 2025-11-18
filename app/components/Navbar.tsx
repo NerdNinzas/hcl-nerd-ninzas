@@ -62,19 +62,13 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                       href="/provider" 
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
-                      Dashboard
+                      Appointments
                     </Link>
                     <Link 
-                      href="/provider/patients" 
+                      href="/provider?tab=patients" 
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
-                      Patients
-                    </Link>
-                    <Link 
-                      href="/provider/schedule" 
-                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      Schedule
+                      My Patients
                     </Link>
                   </>
                 )}
@@ -88,16 +82,22 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                       Dashboard
                     </Link>
                     <Link 
-                      href="/goals" 
+                      href="/dashboard?tab=doctors" 
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
-                      Goals
+                      Find Doctors
                     </Link>
                     <Link 
-                      href="/appointments" 
+                      href="/dashboard?tab=appointments" 
                       className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Appointments
+                    </Link>
+                    <Link 
+                      href="/dashboard?tab=goals" 
+                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    >
+                      Goals
                     </Link>
                   </>
                 )}
@@ -210,13 +210,10 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                 {session.user.role === 'provider' && (
                   <>
                     <Link href="/provider" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
-                      Dashboard
+                      Appointments
                     </Link>
-                    <Link href="/provider/patients" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
-                      Patients
-                    </Link>
-                    <Link href="/provider/schedule" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
-                      Schedule
+                    <Link href="/provider?tab=patients" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                      My Patients
                     </Link>
                   </>
                 )}
@@ -226,11 +223,14 @@ export function Navbar({ title = "HealthCare Portal", subtitle }: NavbarProps) {
                     <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
                       Dashboard
                     </Link>
-                    <Link href="/goals" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
-                      Goals
+                    <Link href="/dashboard?tab=doctors" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                      Find Doctors
                     </Link>
-                    <Link href="/appointments" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                    <Link href="/dashboard?tab=appointments" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
                       Appointments
+                    </Link>
+                    <Link href="/dashboard?tab=goals" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                      Goals
                     </Link>
                   </>
                 )}

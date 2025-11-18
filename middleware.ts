@@ -58,6 +58,10 @@ export const config = {
     '/auth/:path*',
     '/profile/:path*',
     '/onboarding/:path*',
-    '/api/user/:path*'
+    '/api/user/:path*',
+    '/api/goals/:path*',
+    '/api/appointments/:path*',
+    '/api/patients/:path*',
+    '/api/providers/:path*'
   ]
 };

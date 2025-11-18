@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   Heart, 
   Users, 
@@ -48,12 +48,14 @@ interface Appointment {
 export default function ProviderDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const tab = searchParams?.get('tab') || 'appointments';
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [patients, setPatients] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('all');
   const [providerNotes, setProviderNotes] = useState<{ [key: string]: string }>({});
-  const [activeTab, setActiveTab] = useState('appointments');
+  const [activeTab, setActiveTab] = useState(tab);
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<any>(null);
   const [goalData, setGoalData] = useState({
