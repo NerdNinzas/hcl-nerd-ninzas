@@ -159,3 +159,102 @@
 - **Roles**: Patient, Healthcare Provider, Administrator
 - **Permissions**: Granular access control for sensitive health data
 - **Compliance**: HIPAA-compliant audit trails
+# Healthcare Wellness & Preventive Care Portal
+
+## Core Problem in One Line
+
+Patients lack a simple and secure way to track preventive wellness goals, and providers lack visibility into patient compliance resulting in poor preventive care outcomes.
+
+## Problem Overview
+
+Today, many patients fail to meet basic wellness goals and often miss preventive health checkups. This leads to avoidable health issues, increased treatment costs, and poor long-term outcomes.
+Healthcare providers also struggle to monitor patient compliance, track lifestyle goals, and access accurate patient wellness data.
+
+There is **no simple, unified platform** that helps patients stay engaged with their wellness journey while giving providers basic visibility into preventive care compliance all in a secure and privacy-compliant manner.
+
+---
+
+## What Problem Are We Solving?
+
+We aim to build a **Healthcare Wellness & Preventive Care Portal** that:
+
+### For Patients:
+
+- Makes it easy to **set and track wellness goals** (steps, hydration, exercise).
+- Sends **preventive care reminders** (checkups, screenings, vaccines).
+- Provides a **simple dashboard** for health goals and tips.
+- Ensures **privacy and secure access** to their personal health information.
+
+### For Healthcare Providers:
+
+- Offers a **lightweight view of patient compliance** with wellness goals.
+- Makes patient tracking simple without exposing unnecessary personal data.
+- Provides tools to promote **preventive care engagement**.
+
+---
+
+## Why Is This Challenging?
+
+- Health data must be handled **securely and privately** (HIPAA-aware).
+- Needs **role-based access**: patient vs. provider.
+- Must be **fast, usable, and responsive** across devices.
+- Requires backend → frontend → cloud integration.
+- Users expect real-time, simple dashboards and reminders.
+
+---
+
+# Solution (Patient & Provider Journeys)
+
+## Patient Journey
+
+1. **Sign Up & Consent**
+   The patient creates an account, accepts the consent notice, and securely logs in.
+
+2. **Personal Dashboard**
+   After logging in, the patient sees a simple dashboard showing:
+
+   - Wellness goals (steps, water intake, exercise)
+   - Preventive care reminders (vaccines, checkups)
+   - Daily health tip for awareness
+
+3. **Goal Tracking**
+   Patients can easily log progress (e.g., steps walked, water consumed) and see how close they are to their goals.
+
+4. **Profile Management**
+   Patients can update basic health details like allergies, medications, and personal info to keep their record accurate.
+
+5. **Motivation & Compliance**
+   The system helps patients stay consistent with preventive care and encourages daily wellness habits.
+
+---
+
+## Provider Journey
+
+1. **Provider Login**
+   A healthcare provider logs in through the same secure system but is given provider-level access.
+
+2. **Patient List View**
+   Providers see a list of patients showing their wellness compliance status at a glance.
+
+3. **Patient Overview**
+   Clicking a patient shows:
+
+   - Their wellness goals
+   - Their logged progress
+   - Their preventive care compliance levels
+
+   (Only essential information is shown to protect patient privacy.)
+
+4. **Better Preventive Care Management**
+   Providers can quickly identify which patients need follow-up, encouragement, or care reminders.
+
+---
+
+# Final Outcome
+
+The system delivers an easy-to-use, privacy-aware wellness platform where:
+
+- **Patients stay consistent with daily wellness and preventive care**, and
+- **Providers gain simple visibility into patient compliance** to support better outcomes.
+
+---
