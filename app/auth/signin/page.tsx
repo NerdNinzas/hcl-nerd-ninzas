@@ -161,27 +161,6 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Remember Me and Forgot Password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
             {/* Submit Button */}
             <div>
               <button
@@ -240,17 +219,6 @@ export default function SignIn() {
                 </svg>
                 <span className="ml-2">Sign in with Google</span>
               </button>
-            </div>
-          </div>
-
-          {/* Demo Accounts */}
-          <div className="mt-6">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="text-sm font-medium text-gray-900 mb-2">Demo Accounts:</h3>
-              <div className="space-y-1 text-xs text-gray-600">
-                <p><strong>Patient:</strong> patient@demo.com / password123</p>
-                <p><strong>Provider:</strong> provider@demo.com / password123</p>
-              </div>
             </div>
           </div>
 

@@ -13,10 +13,8 @@ import {
   User, 
   AlertCircle, 
   CheckCircle,
-  Stethoscope,
   Calendar,
-  Phone,
-  MapPin
+  Phone
 } from 'lucide-react';
 
 export default function SignUp() {
@@ -26,10 +24,6 @@ export default function SignUp() {
     password: '',
     confirmPassword: '',
     role: 'patient',
-    // Provider-specific fields
-    specialty: '',
-    licenseNumber: '',
-    clinic: '',
     // Patient-specific fields
     phoneNumber: '',
     dateOfBirth: '',
@@ -72,10 +66,6 @@ export default function SignUp() {
       return false;
     }
 
-    if (formData.role === 'provider' && (!formData.specialty || !formData.licenseNumber)) {
-      setError('Specialty and license number are required for healthcare providers');
-      return false;
-    }
 
     if (!formData.agreeToTerms) {
       setError('Please accept the terms and conditions');
@@ -108,11 +98,6 @@ export default function SignUp() {
           email: formData.email,
           password: formData.password,
           role: formData.role,
-          ...(formData.role === 'provider' && {
-            specialty: formData.specialty,
-            licenseNumber: formData.licenseNumber,
-            clinic: formData.clinic
-          }),
           ...(formData.role === 'patient' && {
             phoneNumber: formData.phoneNumber,
             dateOfBirth: formData.dateOfBirth ? new Date(formData.dateOfBirth) : undefined
@@ -266,68 +251,6 @@ export default function SignUp() {
                 />
               </div>
             </div>
-
-            {/* Provider-specific fields */}
-            {formData.role === 'provider' && (
-              <>
-                <div>
-                  <label htmlFor="specialty" className="block text-sm font-medium text-gray-700">
-                    Medical Specialty *
-                  </label>
-                  <div className="mt-1 relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Stethoscope className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      id="specialty"
-                      name="specialty"
-                      type="text"
-                      required={formData.role === 'provider'}
-                      className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      placeholder="e.g., Internal Medicine, Cardiology"
-                      value={formData.specialty}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700">
-                    Medical License Number *
-                  </label>
-                  <input
-                    id="licenseNumber"
-                    name="licenseNumber"
-                    type="text"
-                    required={formData.role === 'provider'}
-                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Enter your license number"
-                    value={formData.licenseNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="clinic" className="block text-sm font-medium text-gray-700">
-                    Clinic/Hospital
-                  </label>
-                  <div className="mt-1 relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MapPin className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      id="clinic"
-                      name="clinic"
-                      type="text"
-                      className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      placeholder="Enter your clinic or hospital name"
-                      value={formData.clinic}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
 
             {/* Patient-specific fields */}
             {formData.role === 'patient' && (
