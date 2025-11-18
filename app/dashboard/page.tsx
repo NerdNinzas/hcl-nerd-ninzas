@@ -3,60 +3,36 @@
 import { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { 
-  Heart, 
-  Calendar, 
-  TrendingUp, 
-  Clock, 
-  CheckCircle, 
-  Activity,
-  Droplets,
-  Footprints,
-  Moon,
-  Utensils,
-  AlertCircle,
-  Award,
-  Plus,
-  Search,
-  X,
+import { Navbar } from '../components/Navbar';
+import {
   User,
+  Calendar,
+  Activity,
+  CheckCircle,
+  TrendingUp,
+  Heart,
+  Search,
   Stethoscope,
   MapPin,
-  Send,
-  XCircle
-} from "lucide-react";
-import { Navbar } from '../components/Navbar';
-
-interface Provider {
-  _id: string;
-  name: string;
-  email: string;
-  specialty: string;
-  clinic?: string;
-  bio?: string;
-  availableHours?: { day: string; startTime: string; endTime: string }[];
-  maxPatients: number;
-  currentPatients: number;
-  image?: string;
-}
-
-interface Appointment {
-  _id: string;
-  provider: {
-    _id: string;
-    name: string;
-    email: string;
-    specialty: string;
-    clinic?: string;
-  };
-  appointmentDate?: string;
-  appointmentTime?: string;
-  status: string;
-  type?: string;
-  patientNotes?: string;
-  providerNotes?: string;
-  createdAt: string;
-}
+  XCircle,
+  X,
+  AlertCircle,
+  Send
+} from 'lucide-react';
+import {
+  DashboardHeader,
+  TabNavigation,
+  OverviewTab,
+  DoctorsTab,
+  AppointmentsTab,
+  GoalsTab,
+  BookingModal,
+  ProfileModal,
+  Provider,
+  Appointment,
+  Goal,
+  UserData
+} from './components';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -64,7 +40,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [providers, setProviders] = useState<Provider[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [goals, setGoals] = useState<any[]>([]);
+  const [goals, setGoals] = useState<Goal[]>([]);
   const [isLoadingProviders, setIsLoadingProviders] = useState(false);
   const [isLoadingAppointments, setIsLoadingAppointments] = useState(false);
   const [isLoadingGoals, setIsLoadingGoals] = useState(false);
@@ -79,7 +55,7 @@ export default function Dashboard() {
   });
   const [bookingError, setBookingError] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -349,14 +325,16 @@ export default function Dashboard() {
     // Check for incomplete goals
     const incompleteGoals = goals.filter(g => g.status === 'active' && g.endDate);
     incompleteGoals.forEach(goal => {
-      const daysLeft = Math.ceil((new Date(goal.endDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-      if (daysLeft > 0 && daysLeft <= 7) {
-        reminders.push({
-          type: 'goal',
-          title: `Goal Deadline Approaching`,
-          message: `${goal.title} - ${daysLeft} days left`,
-          priority: 'medium'
-        });
+      if (goal.endDate) {
+        const daysLeft = Math.ceil((new Date(goal.endDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        if (daysLeft > 0 && daysLeft <= 7) {
+          reminders.push({
+            type: 'goal',
+            title: `Goal Deadline Approaching`,
+            message: `${goal.title} - ${daysLeft} days left`,
+            priority: 'medium'
+          });
+        }
       }
     });
     
