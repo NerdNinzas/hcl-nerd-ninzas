@@ -98,9 +98,6 @@ The system delivers an easy-to-use, privacy-aware wellness platform where:
 
 ---
 
-Here is a **clean, sharp, human-readable Technical Specification** — short, intelligent, and perfect for a README.
-
----
 
 # Technical Specification
 
